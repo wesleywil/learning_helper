@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { FaAngleDoubleDown, FaAngleDoubleUp, FaPlus } from "react-icons/fa";
-import StudySectionTopic from "../../app/components/study_section_topic/study_section_topic.component";
-import StudySubTopic from "../../app/components/study_sub_topic/study_sub_topic.component";
+import StudySectionTopic from "../study_section_topic/study_section_topic.component";
+import StudySubTopic from "../study_sub_topic/study_sub_topic.component";
 
 type StudySectionProps = {
   name: string;
