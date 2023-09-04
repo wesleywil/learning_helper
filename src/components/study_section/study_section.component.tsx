@@ -1,7 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { FaAngleDoubleDown, FaAngleDoubleUp, FaPlus } from "react-icons/fa";
+import { AppDispatch } from "@/redux/store";
+import { handleHideSubTopicsContainer } from "@/redux/utils/utils";
+
 import StudySectionTopic from "../study_section_topic/study_section_topic.component";
 import StudySubTopic from "../study_sub_topic/study_sub_topic.component";
 
@@ -12,14 +16,24 @@ type StudySectionProps = {
 
 const StudySection = ({ name, bgColor }: StudySectionProps) => {
   const [fullScreen, setFullScreen] = useState<boolean>(false);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const style = {
+    height: fullScreen ? "100vh" : "fit-content",
+    backgroundColor: bgColor,
+  };
+
   return (
     <div
-      style={fullScreen ? { height: "100vh" } : { minHeight: "fit-content" }}
-      className={`w-[95vh] py-4  flex flex-col bg-${bgColor}/50 rounded overflow-hidden`}
+      style={style}
+      className={`md:w-[85vw] xl:w-[60vw] py-4  flex flex-col rounded overflow-hidden`}
     >
       <div className="w-full px-4 pb-1 flex justify-between border-b-2 border-black">
         <div className="flex gap-2 items-center">
-          <button className="p-2 bg-black hover:bg-gray-700 text-white font-bold rounded-full">
+          <button
+            onClick={() => dispatch(handleHideSubTopicsContainer())}
+            className="p-2 bg-black hover:bg-gray-700 text-white font-bold rounded-full"
+          >
             <FaPlus />
           </button>
           <h2 className="text-xl font-semibold">{name}</h2>
