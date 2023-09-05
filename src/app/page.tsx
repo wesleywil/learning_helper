@@ -5,14 +5,19 @@ import type { RootState } from "@/redux/store";
 
 import StudySection from "../components/study_section/study_section.component";
 import SubTopicsContainer from "@/components/sub_topics_container/sub_topics_container.component";
+import TopicForm from "@/components/topic_form/topic_form.component";
 
 export default function Home() {
   const hideContainer = useSelector(
     (state: RootState) => state.utils.hide_sub_topics_container
   );
+  const hideTopicForm = useSelector(
+    (state: RootState) => state.utils.hide_topic_form
+  );
   return (
     <>
       {hideContainer ? "" : <SubTopicsContainer />}
+      {hideTopicForm ? "" : <TopicForm />}
 
       <main className="p-2  flex min-h-screen flex-col items-center  overflow-hidden">
         <h1 className="mb-4 pb-4 text-5xl font-bold border-b-4 border-black">
