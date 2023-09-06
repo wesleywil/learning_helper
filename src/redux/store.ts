@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
+import topicReducer from "./topics/topics";
 import utilReducer from "./utils/utils";
 
 export const store = configureStore({
     reducer:{
-        utils:utilReducer
+        utils:utilReducer,
+        topics:topicReducer,
     }
 })
 
