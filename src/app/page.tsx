@@ -6,6 +6,7 @@ import type { RootState } from "@/redux/store";
 import StudySection from "../components/study_section/study_section.component";
 import SubTopicsContainer from "@/components/sub_topics_container/sub_topics_container.component";
 import TopicForm from "@/components/topic_form/topic_form.component";
+import { Status } from "@/utils/interfaces";
 
 export default function Home() {
   const hideContainer = useSelector(
@@ -27,11 +28,11 @@ export default function Home() {
         {/* Learning, Next to Learn, Finished */}
         <div className="flex flex-col gap-2 z-0">
           {/* Learning */}
-          <StudySection name="Learning" bgColor="#6ce36c75" />
+          <StudySection name={Status.LEARNING} bgColor="#6ce36c75" />
           {/* Next to Learn */}
-          <StudySection name="Next To Learn" bgColor="#5c5cdc75" />
+          <StudySection name={Status.WANT_TO_LEARN} bgColor="#5c5cdc75" />
           {/* Finished */}
-          <StudySection name="Finished" bgColor="#cb5c5c75" />
+          <StudySection name={Status.FINISHED} bgColor="#cb5c5c75" />
         </div>
       </main>
     </>

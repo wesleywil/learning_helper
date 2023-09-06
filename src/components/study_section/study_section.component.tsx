@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { FaAngleDoubleDown, FaAngleDoubleUp, FaPlus } from "react-icons/fa";
-import { AppDispatch } from "@/redux/store";
+import type { AppDispatch, RootState } from "@/redux/store";
 import { handleHideTopicForm } from "@/redux/utils/utils";
+import { fetchTopics } from "@/redux/topics/topics";
+import { capitalizeWords } from "@/utils/utils";
 
 import StudySectionTopic from "../study_section_topic/study_section_topic.component";
 import StudySubTopic from "../study_sub_topic/study_sub_topic.component";
@@ -16,12 +18,20 @@ type StudySectionProps = {
 
 const StudySection = ({ name, bgColor }: StudySectionProps) => {
   const [fullScreen, setFullScreen] = useState<boolean>(false);
+  const status = useSelector((state: RootState) => state.topics.status);
+  const topics = useSelector((state: RootState) => state.topics.topics);
   const dispatch = useDispatch<AppDispatch>();
 
   const style = {
     height: fullScreen ? "100vh" : "fit-content",
     backgroundColor: bgColor,
   };
+
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchTopics());
+    }
+  }, [status]);
 
   return (
     <div
@@ -36,7 +46,7 @@ const StudySection = ({ name, bgColor }: StudySectionProps) => {
           >
             <FaPlus />
           </button>
-          <h2 className="text-xl font-semibold">{name}</h2>
+          <h2 className="text-xl font-semibold">{capitalizeWords(name)}</h2>
         </div>
 
         <button
@@ -47,19 +57,22 @@ const StudySection = ({ name, bgColor }: StudySectionProps) => {
         </button>
       </div>
       <div className="px-4 gap-2">
-        <StudySectionTopic
-          topic="PHP"
-          description="To learn the basic concepts of php"
-        >
-          <StudySubTopic subtopic="Classes" />
-          <StudySubTopic subtopic="Functions" />
-          <StudySubTopic subtopic="Attributes" />
-        </StudySectionTopic>
-        <StudySectionTopic topic="React" description="To learn how HOC works">
-          <StudySubTopic subtopic="Logic" />
-          <StudySubTopic subtopic="When to Use" />
-          <StudySubTopic subtopic="Not to Do's" />
-        </StudySectionTopic>
+        {topics.length
+          ? topics
+              .filter((item) => item.status === name)
+              .map((item) => (
+                <StudySectionTopic
+                  topic={item.title}
+                  description={item.description}
+                >
+                  {item.sub_topics?.length
+                    ? item.sub_topics.map((sub) => (
+                        <StudySubTopic subtopic={sub.title} />
+                      ))
+                    : ""}
+                </StudySectionTopic>
+              ))
+          : ""}
       </div>
     </div>
   );

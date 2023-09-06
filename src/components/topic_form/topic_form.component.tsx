@@ -4,12 +4,36 @@ import { useDispatch } from "react-redux";
 import { FaTimes } from "react-icons/fa";
 import { AppDispatch } from "@/redux/store";
 import { handleHideTopicForm } from "@/redux/utils/utils";
+import { Status, Topic } from "@/utils/interfaces";
+import { createTopic } from "@/redux/topics/topics";
 
 const TopicForm = () => {
   const dispatch = useDispatch<AppDispatch>();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const target = event.target as typeof event.target & {
+      title: { value: string };
+      description: { value: string };
+    };
+
+    const data: Topic = {
+      title: target.title.value,
+      description: target.description.value,
+      status: Status.LEARNING,
+      finished: false,
+    };
+
+    dispatch(createTopic(data));
+    dispatch(handleHideTopicForm());
+  };
   return (
     <div className="absolute min-h-screen min-w-full flex flex-col items-center justify-center bg-black/70 z-30">
-      <form className="md:w-2/3 xl:w-1/3 mt-2 text-white">
+      <form
+        onSubmit={handleSubmit}
+        className="md:w-2/3 xl:w-1/3 mt-2 text-white"
+      >
         <div className="px-2 flex justify-between">
           <h3 className="text-2xl font-semibold">New Topic</h3>
           <button
@@ -23,13 +47,15 @@ const TopicForm = () => {
           <input
             type="text"
             name="title"
-            placeholder="Sub Topic Title"
+            placeholder="Topic Title"
+            required
             className="px-2 py-1 rounded"
           />
           <textarea
             name="description"
             className="px-2 py-1 rounded"
-            placeholder="Sub Topic Description/Info"
+            placeholder="Topic Description/Info"
+            required
             rows={5}
           ></textarea>
         </div>
