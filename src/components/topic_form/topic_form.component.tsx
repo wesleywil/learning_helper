@@ -1,13 +1,15 @@
 "use client";
 
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { FaTimes } from "react-icons/fa";
-import { AppDispatch } from "@/redux/store";
+import type { AppDispatch, RootState } from "@/redux/store";
 import { handleHideTopicForm } from "@/redux/utils/utils";
-import { Status, Topic } from "@/utils/interfaces";
+import { Topic } from "@/utils/interfaces";
 import { createTopic } from "@/redux/topics/topics";
 
 const TopicForm = () => {
+  const status = useSelector((state: RootState) => state.sections.section);
   const dispatch = useDispatch<AppDispatch>();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -21,7 +23,7 @@ const TopicForm = () => {
     const data: Topic = {
       title: target.title.value,
       description: target.description.value,
-      status: Status.LEARNING,
+      status: status,
       finished: false,
     };
 
