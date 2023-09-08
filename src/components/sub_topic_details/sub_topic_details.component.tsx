@@ -1,14 +1,19 @@
 "use client";
 
+import { SubTopic } from "@/utils/interfaces";
 import { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 
-const SubTopicDetails = () => {
+type SubTopicDetailsProps = {
+  subTopic: SubTopic;
+};
+
+const SubTopicDetails = ({ subTopic }: SubTopicDetailsProps) => {
   const [edit, setEdit] = useState<boolean>(false);
   return (
     <div className="text-white">
       <div className="px-2 flex justify-between">
-        <h3 className="text-2xl font-semibold">Classes</h3>
+        <h3 className="text-2xl font-semibold">{subTopic.title}</h3>
         <button className="hover:text-red-400 transform duration-700 ease-in-out">
           <FaTrashAlt />
         </button>{" "}
@@ -19,18 +24,12 @@ const SubTopicDetails = () => {
             onDoubleClick={() => setEdit(!edit)}
             className="w-full h-full p-2 bg-slate-100 text-black rounded"
           >
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum
-            cumque consequatur, iusto ab amet laboriosam, necessitatibus magnam
-            ipsam eum alias, sequi sint ullam quo quae deleniti praesentium
-            voluptate officia temporibus?
+            {subTopic.description}
           </textarea>
         </div>
       ) : (
         <p className="w-full h-28 p-2 bg-white text-black rounded">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum
-          cumque consequatur, iusto ab amet laboriosam, necessitatibus magnam
-          ipsam eum alias, sequi sint ullam quo quae deleniti praesentium
-          voluptate officia temporibus?
+          {subTopic.description}
         </p>
       )}
 

@@ -69,6 +69,7 @@ const StudySection = ({ name, bgColor }: StudySectionProps) => {
               .filter((item) => item.status === name)
               .map((item) => (
                 <StudySectionTopic
+                  id={item.id!}
                   topic={item.title}
                   description={item.description}
                 >

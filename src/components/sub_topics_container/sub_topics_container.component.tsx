@@ -15,6 +15,7 @@ const SubTopicsContainer = () => {
   const hideForm = useSelector(
     (state: RootState) => state.utils.hide_sub_topic_form
   );
+  const topic = useSelector((state: RootState) => state.topics.topic);
   const dispatch = useDispatch<AppDispatch>();
 
   return (
@@ -32,13 +33,18 @@ const SubTopicsContainer = () => {
         >
           <FaPlus />
         </button>
-        <h2 className="text-3xl font-bold text-white">PHP</h2>
+        <h2 className="text-3xl font-bold text-white">{topic.title}</h2>
       </div>
 
       <div className="px-2 md:w-4/5 xl:w-1/3 h-[35rem] flex flex-col gap-2 overflow-y-auto">
         {hideForm ? "" : <SubTopicForm />}
-
-        <SubTopicDetails />
+        {topic.sub_topics?.length ? (
+          topic.sub_topics?.map((item) => <SubTopicDetails subTopic={item} />)
+        ) : (
+          <h1 className="py-8 text-3xl text-white font-semibold text-center">
+            No Sub Topics Added
+          </h1>
+        )}
       </div>
     </div>
   );

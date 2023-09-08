@@ -2,15 +2,18 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { FaEdit, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { AppDispatch } from "@/redux/store";
+import { selectTopic } from "@/redux/topics/topics";
 import { handleHideSubTopicsContainer } from "@/redux/utils/utils";
 
 type StudySectionTopicProps = {
+  id: number;
   topic: string;
   description: string;
   children: React.ReactNode;
 };
 
 const StudySectionTopic = ({
+  id,
   topic,
   description,
   children,
@@ -18,11 +21,17 @@ const StudySectionTopic = ({
   const [hidden, setHidden] = useState<boolean>(true);
 
   const dispatch = useDispatch<AppDispatch>();
+
+  const handleSelectTopic = (id: number) => {
+    dispatch(selectTopic(id));
+    dispatch(handleHideSubTopicsContainer());
+  };
+
   return (
     <div className="w-full mt-2 text-white bg-black/60 rounded overflow-hidden">
       <div className="flex gap-8">
         <button
-          onClick={() => dispatch(handleHideSubTopicsContainer())}
+          onClick={() => handleSelectTopic(id)}
           className="px-2 hover:text-slate-800 bg-slate-800 hover:bg-slate-100 transform duration-500 ease-in-out"
         >
           <FaEdit />

@@ -1,14 +1,38 @@
 "use client";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaTimes } from "react-icons/fa";
-import { AppDispatch } from "@/redux/store";
-import { handleHideSubTopicForm } from "@/redux/utils/utils";
+import type { AppDispatch, RootState } from "@/redux/store";
+import {
+  handleHideSubTopicForm,
+  handleHideSubTopicsContainer,
+} from "@/redux/utils/utils";
+import { SubTopic } from "@/utils/interfaces";
+import { createSubTopic } from "@/redux/sub_topics/sub_topics";
 
 const SubTopicForm = () => {
+  const topic = useSelector((state: RootState) => state.topics.topic);
   const dispatch = useDispatch<AppDispatch>();
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const target = event.target as typeof event.target & {
+      title: { value: string };
+      description: { value: string };
+    };
+
+    const data: SubTopic = {
+      title: target.title.value,
+      description: target.description.value,
+      finished: false,
+      topicId: topic.id!,
+    };
+    dispatch(createSubTopic(data));
+    dispatch(handleHideSubTopicsContainer());
+  };
   return (
-    <form className="mt-2 text-white">
+    <form onSubmit={handleSubmit} className="mt-2 text-white">
       <div className="px-2 flex justify-between">
         <h3 className="text-2xl font-semibold">New Sub-Topic</h3>
         <button
