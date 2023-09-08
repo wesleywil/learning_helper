@@ -1,5 +1,5 @@
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Topic } from "@/utils/interfaces";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export interface TopicState {
   topics: Topic[];
@@ -38,7 +38,14 @@ export const createTopic = createAsyncThunk(
 export const topicSlice = createSlice({
   name: "topics",
   initialState,
-  reducers: {},
+  reducers: {
+    selectTopic: (state, action: PayloadAction<number>) => {
+      const selectedTopic = state.topics.find(
+        (item) => item.id === action.payload
+      );
+      state.topic = selectedTopic !== undefined ? selectedTopic : ({} as Topic);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTopics.pending, (state) => {
@@ -66,6 +73,6 @@ export const topicSlice = createSlice({
   },
 });
 
-export const {} = topicSlice.actions;
+export const { selectTopic } = topicSlice.actions;
 
 export default topicSlice.reducer;

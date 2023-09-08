@@ -8,10 +8,11 @@ export interface Topic{
 }
 
 export interface SubTopic{
-    id:number,
+    id?:number,
     title:string,
     description:string,
     finished:boolean,
+    topicId:number,
 }
 
 export enum Status{
