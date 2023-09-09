@@ -1,8 +1,11 @@
 "use client";
 
-import { SubTopic } from "@/utils/interfaces";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "@/redux/store";
 import { FaTrashAlt } from "react-icons/fa";
+import { SubTopic } from "@/utils/interfaces";
+import { deleteSubTopic, updateSubTopic } from "@/redux/sub_topics/sub_topics";
 
 type SubTopicDetailsProps = {
   subTopic: SubTopic;
@@ -10,26 +13,51 @@ type SubTopicDetailsProps = {
 
 const SubTopicDetails = ({ subTopic }: SubTopicDetailsProps) => {
   const [edit, setEdit] = useState<boolean>(false);
+  const [description, setDescription] = useState<string>(subTopic.description);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleDelete = () => {
+    dispatch(deleteSubTopic(subTopic.id!));
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setDescription(value);
+  };
+
+  const handleUpdate = () => {
+    const data = {
+      description,
+      finished: false,
+      id: subTopic.id!,
+    };
+    dispatch(updateSubTopic(data));
+    setEdit(!edit);
+  };
   return (
     <div className="text-white">
       <div className="px-2 flex justify-between">
         <h3 className="text-2xl font-semibold">{subTopic.title}</h3>
-        <button className="hover:text-red-400 transform duration-700 ease-in-out">
+        <button
+          onClick={handleDelete}
+          className="hover:text-red-400 transform duration-700 ease-in-out"
+        >
           <FaTrashAlt />
         </button>{" "}
       </div>
       {edit ? (
-        <div className="w-full h-28">
+        <div className="w-full h-28 flex gap-2 flex-col">
           <textarea
-            onDoubleClick={() => setEdit(!edit)}
+            onDoubleClick={handleUpdate}
+            onChange={handleChange}
             className="w-full h-full p-2 bg-slate-100 text-black rounded"
           >
-            {subTopic.description}
+            {description}
           </textarea>
         </div>
       ) : (
         <p className="w-full h-28 p-2 bg-white text-black rounded">
-          {subTopic.description}
+          {description}
         </p>
       )}
 
