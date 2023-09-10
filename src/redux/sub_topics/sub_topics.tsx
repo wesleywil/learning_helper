@@ -1,17 +1,18 @@
-import { SubTopic } from "@/utils/interfaces";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { SubTopic } from "@/utils/interfaces";
+import { SubTopicsCodStatus } from "@/utils/status";
 
 export interface SubTopicState {
   subtopics: SubTopic[];
   subtopic: SubTopic;
-  status: string;
+  status: SubTopicsCodStatus;
   error: string;
 }
 
 const initialState: SubTopicState = {
   subtopics: [],
   subtopic: {} as SubTopic,
-  status: "idle",
+  status: SubTopicsCodStatus.IDLE,
   error: "",
 };
 
@@ -67,45 +68,45 @@ export const subTopicSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchSubTopics.pending, (state) => {
-        state.status = "trying to fetch sub-topics";
+        state.status = SubTopicsCodStatus.FETCHING;
       })
       .addCase(fetchSubTopics.fulfilled, (state, { payload }) => {
         state.subtopics = payload;
-        state.status = "sub-topics fetched";
+        state.status = SubTopicsCodStatus.FETCHED;
       })
       .addCase(fetchSubTopics.rejected, (state, { payload }) => {
         state.error = String(payload);
-        state.status = "error while trying to fetch sub-topics";
+        state.status = SubTopicsCodStatus.ERROR;
       })
       .addCase(createSubTopic.pending, (state) => {
-        state.status = "trying to create new sub-topic";
+        state.status = SubTopicsCodStatus.CREATING;
       })
-      .addCase(createSubTopic.fulfilled, (state, { payload }) => {
-        state.status = "sub-topic created successfully";
+      .addCase(createSubTopic.fulfilled, (state) => {
+        state.status = SubTopicsCodStatus.CREATED;
       })
       .addCase(createSubTopic.rejected, (state, { payload }) => {
         state.error = String(payload);
-        state.status = "error while trying to create a sub-topic";
+        state.status = SubTopicsCodStatus.ERROR;
       })
       .addCase(updateSubTopic.pending, (state) => {
-        state.status = "trying to update sub-topic";
+        state.status = SubTopicsCodStatus.UPDATING;
       })
-      .addCase(updateSubTopic.fulfilled, (state, { payload }) => {
-        state.status = "sub-topic updated successfully";
+      .addCase(updateSubTopic.fulfilled, (state) => {
+        state.status = SubTopicsCodStatus.UPDATED;
       })
       .addCase(updateSubTopic.rejected, (state, { payload }) => {
         state.error = String(payload);
-        state.status = "error while trying to update a sub-topic";
+        state.status = SubTopicsCodStatus.ERROR;
       })
       .addCase(deleteSubTopic.pending, (state) => {
-        state.status = "trying to delete sub-topic";
+        state.status = SubTopicsCodStatus.DELETING;
       })
-      .addCase(deleteSubTopic.fulfilled, (state, { payload }) => {
-        state.status = "sub-topic deleted successfully";
+      .addCase(deleteSubTopic.fulfilled, (state) => {
+        state.status = SubTopicsCodStatus.DELETED;
       })
       .addCase(deleteSubTopic.rejected, (state, { payload }) => {
         state.error = String(payload);
-        state.status = "error while trying to delete a sub-topic";
+        state.status = SubTopicsCodStatus.ERROR;
       });
   },
 });

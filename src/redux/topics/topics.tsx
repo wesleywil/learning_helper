@@ -1,17 +1,18 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Topic } from "@/utils/interfaces";
+import { TopicCodStatus } from "@/utils/status";
 
 export interface TopicState {
   topics: Topic[];
   topic: Topic;
-  status: string;
+  status: TopicCodStatus;
   error: string;
 }
 
 const initialState: TopicState = {
   topics: [],
   topic: {} as Topic,
-  status: "idle",
+  status: TopicCodStatus.IDLE,
   error: "",
 };
 
@@ -49,26 +50,26 @@ export const topicSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchTopics.pending, (state) => {
-        state.status = "fetching";
+        state.status = TopicCodStatus.FETCHING;
       })
       .addCase(fetchTopics.fulfilled, (state, { payload }) => {
-        state.status = "success";
+        state.status = TopicCodStatus.FETCHED;
         state.topics = payload;
       })
       .addCase(fetchTopics.rejected, (state, { payload }) => {
         state.error = String(payload);
-        state.status = "error";
+        state.status = TopicCodStatus.ERROR;
       })
       .addCase(createTopic.pending, (state) => {
-        state.status = "trying to create new topic";
+        state.status = TopicCodStatus.CREATING;
       })
       .addCase(createTopic.fulfilled, (state, { payload }) => {
-        state.status = "topic created successfully";
+        state.status = TopicCodStatus.CREATED;
         state.topics = payload;
       })
       .addCase(createTopic.rejected, (state, { payload }) => {
         state.error = String(payload);
-        state.status = "error while trying to create a topic";
+        state.status = TopicCodStatus.ERROR;
       });
   },
 });

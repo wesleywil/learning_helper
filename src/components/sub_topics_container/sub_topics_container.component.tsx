@@ -9,6 +9,7 @@ import {
   handleHideSubTopicForm,
 } from "@/redux/utils/utils";
 import { fetchSubTopics } from "@/redux/sub_topics/sub_topics";
+import { SubTopicsCodStatus } from "@/utils/status";
 
 import SubTopicDetails from "../sub_topic_details/sub_topic_details.component";
 import SubTopicForm from "../sub_topic_form/sub_topic_form.component";
@@ -27,14 +28,14 @@ const SubTopicsContainer = () => {
   useEffect(() => {
     console.log("Topic Effect Test");
     if (
-      status === "idle" ||
-      status === "sub-topic created successfully" ||
-      status === "sub-topic updated successfully" ||
-      status === "sub-topic deleted successfully"
+      status === SubTopicsCodStatus.IDLE ||
+      status === SubTopicsCodStatus.CREATED ||
+      status === SubTopicsCodStatus.UPDATED ||
+      status === SubTopicsCodStatus.DELETED
     ) {
       dispatch(fetchSubTopics(topic.id!));
     }
-  }, [topic]);
+  }, [status]);
 
   return (
     <div className="absolute min-h-screen min-w-full flex flex-col items-center justify-center bg-black/70 z-10">

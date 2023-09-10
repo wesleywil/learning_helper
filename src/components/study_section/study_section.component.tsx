@@ -9,6 +9,7 @@ import { handleHideTopicForm } from "@/redux/utils/utils";
 import { setSection } from "@/redux/sections/sections";
 import { capitalizeWords } from "@/utils/utils";
 import { Status } from "@/utils/interfaces";
+import { TopicCodStatus } from "@/utils/status";
 
 import StudySectionTopic from "../study_section_topic/study_section_topic.component";
 import StudySubTopic from "../study_sub_topic/study_sub_topic.component";
@@ -35,7 +36,7 @@ const StudySection = ({ name, bgColor }: StudySectionProps) => {
   };
 
   useEffect(() => {
-    if (status === "idle" || status === "topic created successfully") {
+    if (status === TopicCodStatus.IDLE || status === TopicCodStatus.CREATED) {
       dispatch(fetchTopics());
     }
   }, [status]);
