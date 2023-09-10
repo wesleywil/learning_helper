@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaTimes, FaPlus } from "react-icons/fa";
 import type { AppDispatch, RootState } from "@/redux/store";
@@ -7,6 +8,7 @@ import {
   handleHideSubTopicsContainer,
   handleHideSubTopicForm,
 } from "@/redux/utils/utils";
+import { fetchSubTopics } from "@/redux/sub_topics/sub_topics";
 
 import SubTopicDetails from "../sub_topic_details/sub_topic_details.component";
 import SubTopicForm from "../sub_topic_form/sub_topic_form.component";
@@ -16,7 +18,23 @@ const SubTopicsContainer = () => {
     (state: RootState) => state.utils.hide_sub_topic_form
   );
   const topic = useSelector((state: RootState) => state.topics.topic);
+  const subtopics = useSelector(
+    (state: RootState) => state.subTopics.subtopics
+  );
+  const status = useSelector((state: RootState) => state.subTopics.status);
   const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    console.log("Topic Effect Test");
+    if (
+      status === "idle" ||
+      status === "sub-topic created successfully" ||
+      status === "sub-topic updated successfully" ||
+      status === "sub-topic deleted successfully"
+    ) {
+      dispatch(fetchSubTopics(topic.id!));
+    }
+  }, [topic]);
 
   return (
     <div className="absolute min-h-screen min-w-full flex flex-col items-center justify-center bg-black/70 z-10">
@@ -38,8 +56,8 @@ const SubTopicsContainer = () => {
 
       <div className="px-2 md:w-4/5 xl:w-1/3 h-[35rem] flex flex-col gap-2 overflow-y-auto">
         {hideForm ? "" : <SubTopicForm />}
-        {topic.sub_topics?.length ? (
-          topic.sub_topics?.map((item) => <SubTopicDetails subTopic={item} />)
+        {subtopics.length ? (
+          subtopics.map((item) => <SubTopicDetails subTopic={item} />)
         ) : (
           <h1 className="py-8 text-3xl text-white font-semibold text-center">
             No Sub Topics Added

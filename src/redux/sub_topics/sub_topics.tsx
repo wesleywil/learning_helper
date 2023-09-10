@@ -15,6 +15,16 @@ const initialState: SubTopicState = {
   error: "",
 };
 
+export const fetchSubTopics = createAsyncThunk(
+  "subTopics/fetchSubTopics",
+  async (id: number) => {
+    const res = await fetch(
+      `http://localhost:3000/api/topics/${id}/sub_topics`
+    );
+    return res.json();
+  }
+);
+
 export const createSubTopic = createAsyncThunk(
   "subTopics/createSubTopic",
   async (data: SubTopic) => {
@@ -56,6 +66,17 @@ export const subTopicSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(fetchSubTopics.pending, (state) => {
+        state.status = "trying to fetch sub-topics";
+      })
+      .addCase(fetchSubTopics.fulfilled, (state, { payload }) => {
+        state.subtopics = payload;
+        state.status = "sub-topics fetched";
+      })
+      .addCase(fetchSubTopics.rejected, (state, { payload }) => {
+        state.error = String(payload);
+        state.status = "error while trying to fetch sub-topics";
+      })
       .addCase(createSubTopic.pending, (state) => {
         state.status = "trying to create new sub-topic";
       })
