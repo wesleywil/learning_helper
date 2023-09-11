@@ -58,7 +58,9 @@ const SubTopicsContainer = () => {
       <div className="px-2 md:w-4/5 xl:w-1/3 h-[35rem] flex flex-col gap-2 overflow-y-auto">
         {hideForm ? "" : <SubTopicForm />}
         {subtopics.length ? (
-          subtopics.map((item) => <SubTopicDetails subTopic={item} />)
+          subtopics.map((item) => (
+            <SubTopicDetails key={item.id} subTopic={item} />
+          ))
         ) : (
           <h1 className="py-8 text-3xl text-white font-semibold text-center">
             No Sub Topics Added
