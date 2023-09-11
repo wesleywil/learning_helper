@@ -68,20 +68,7 @@ const StudySection = ({ name, bgColor }: StudySectionProps) => {
         {topics.length
           ? topics
               .filter((item) => item.status === name)
-              .map((item) => (
-                <StudySectionTopic
-                  key={item.id}
-                  id={item.id!}
-                  topic={item.title}
-                  description={item.description}
-                >
-                  {item.sub_topics?.length
-                    ? item.sub_topics.map((sub) => (
-                        <StudySubTopic key={sub.id} subtopic={sub.title} />
-                      ))
-                    : ""}
-                </StudySectionTopic>
-              ))
+              .map((item) => <StudySectionTopic key={item.id} topic={item} />)
           : ""}
       </div>
     </div>
