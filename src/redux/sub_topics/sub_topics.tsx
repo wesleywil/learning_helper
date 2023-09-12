@@ -1,9 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SubTopic } from "@/utils/interfaces";
 import { SubTopicsCodStatus } from "@/utils/status";
 
 export interface SubTopicState {
   subtopics: SubTopic[];
+  selectedsubtopics: SubTopic[];
   subtopic: SubTopic;
   status: SubTopicsCodStatus;
   error: string;
@@ -11,6 +12,7 @@ export interface SubTopicState {
 
 const initialState: SubTopicState = {
   subtopics: [],
+  selectedsubtopics: [],
   subtopic: {} as SubTopic,
   status: SubTopicsCodStatus.IDLE,
   error: "",
@@ -18,10 +20,8 @@ const initialState: SubTopicState = {
 
 export const fetchSubTopics = createAsyncThunk(
   "subTopics/fetchSubTopics",
-  async (id: number) => {
-    const res = await fetch(
-      `http://localhost:3000/api/topics/${id}/sub_topics`
-    );
+  async () => {
+    const res = await fetch(`http://localhost:3000/api/sub_topics`);
     return res.json();
   }
 );
@@ -64,7 +64,14 @@ export const deleteSubTopic = createAsyncThunk(
 export const subTopicSlice = createSlice({
   name: "subTopics",
   initialState,
-  reducers: {},
+  reducers: {
+    selectSubTopics: (state, action: PayloadAction<number>) => {
+      const selectedSubTopics = state.subtopics.filter(
+        (item) => item.topicId === action.payload
+      );
+      state.selectedsubtopics = selectedSubTopics;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchSubTopics.pending, (state) => {
@@ -111,6 +118,6 @@ export const subTopicSlice = createSlice({
   },
 });
 
-export const {} = subTopicSlice.actions;
+export const { selectSubTopics } = subTopicSlice.actions;
 
 export default subTopicSlice.reducer;
