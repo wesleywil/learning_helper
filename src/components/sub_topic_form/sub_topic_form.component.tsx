@@ -30,7 +30,7 @@ const SubTopicForm = () => {
     };
     dispatch(createSubTopic(data));
     dispatch(handleHideSubTopicsContainer());
-    window.location.reload();
+    // window.location.reload();
   };
   return (
     <form onSubmit={handleSubmit} className="mt-2 text-white">

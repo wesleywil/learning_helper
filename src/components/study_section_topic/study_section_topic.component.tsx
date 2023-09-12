@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaEdit, FaChevronDown, FaChevronUp } from "react-icons/fa";
-import { AppDispatch } from "@/redux/store";
+import type { AppDispatch, RootState } from "@/redux/store";
 import { selectTopic } from "@/redux/topics/topics";
 import { handleHideSubTopicsContainer } from "@/redux/utils/utils";
 import { Topic } from "@/utils/interfaces";
 import StudySubTopic from "../study_sub_topic/study_sub_topic.component";
+import { selectSubTopics } from "@/redux/sub_topics/sub_topics";
 
 type StudySectionTopicProps = {
   topic: Topic;
@@ -14,6 +15,10 @@ type StudySectionTopicProps = {
 const StudySectionTopic = ({ topic }: StudySectionTopicProps) => {
   const [hidden, setHidden] = useState<boolean>(true);
 
+  const status = useSelector((state: RootState) => state.subTopics.status);
+  const subtopics = useSelector(
+    (state: RootState) => state.subTopics.subtopics
+  );
   const dispatch = useDispatch<AppDispatch>();
 
   const handleSelectTopic = (id: number) => {
@@ -22,8 +27,9 @@ const StudySectionTopic = ({ topic }: StudySectionTopicProps) => {
   };
 
   useEffect(() => {
-    console.log("Study Section");
-  }, [topic]);
+    console.log("study section topic", topic.id!);
+    dispatch(selectSubTopics(topic.id!));
+  }, [topic, status]);
 
   return (
     <div className="w-full mt-2 text-white bg-black/60 rounded overflow-hidden">
@@ -49,10 +55,12 @@ const StudySectionTopic = ({ topic }: StudySectionTopicProps) => {
       <div className={`${hidden ? "hidden" : ""} border-t border-white`}>
         <p className="px-2">{topic.description}</p>
         <div className="px-2">
-          {topic.sub_topics?.length
-            ? topic.sub_topics.map((sub) => (
-                <StudySubTopic key={sub.id} subtopic={sub.title} />
-              ))
+          {subtopics.length
+            ? subtopics
+                .filter((item) => item.topicId === topic.id)
+                .map((sub: any) => (
+                  <StudySubTopic key={sub.id} subtopic={sub.title} />
+                ))
             : ""}
         </div>
       </div>

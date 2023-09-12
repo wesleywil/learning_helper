@@ -1,18 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaAngleDoubleDown, FaAngleDoubleUp, FaPlus } from "react-icons/fa";
 import type { AppDispatch, RootState } from "@/redux/store";
-import { fetchTopics } from "@/redux/topics/topics";
 import { handleHideTopicForm } from "@/redux/utils/utils";
 import { setSection } from "@/redux/sections/sections";
 import { capitalizeWords } from "@/utils/utils";
 import { Status } from "@/utils/interfaces";
-import { TopicCodStatus } from "@/utils/status";
 
 import StudySectionTopic from "../study_section_topic/study_section_topic.component";
-import StudySubTopic from "../study_sub_topic/study_sub_topic.component";
 
 type StudySectionProps = {
   name: Status;
@@ -21,7 +18,7 @@ type StudySectionProps = {
 
 const StudySection = ({ name, bgColor }: StudySectionProps) => {
   const [fullScreen, setFullScreen] = useState<boolean>(false);
-  const status = useSelector((state: RootState) => state.topics.status);
+
   const topics = useSelector((state: RootState) => state.topics.topics);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -34,12 +31,6 @@ const StudySection = ({ name, bgColor }: StudySectionProps) => {
     dispatch(setSection(name));
     dispatch(handleHideTopicForm());
   };
-
-  useEffect(() => {
-    if (status === TopicCodStatus.IDLE || status === TopicCodStatus.CREATED) {
-      dispatch(fetchTopics());
-    }
-  }, [status]);
 
   return (
     <div

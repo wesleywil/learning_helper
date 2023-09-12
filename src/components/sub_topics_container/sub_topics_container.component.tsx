@@ -8,8 +8,7 @@ import {
   handleHideSubTopicsContainer,
   handleHideSubTopicForm,
 } from "@/redux/utils/utils";
-import { fetchSubTopics } from "@/redux/sub_topics/sub_topics";
-import { SubTopicsCodStatus } from "@/utils/status";
+import { selectSubTopics } from "@/redux/sub_topics/sub_topics";
 
 import SubTopicDetails from "../sub_topic_details/sub_topic_details.component";
 import SubTopicForm from "../sub_topic_form/sub_topic_form.component";
@@ -20,22 +19,16 @@ const SubTopicsContainer = () => {
   );
   const topic = useSelector((state: RootState) => state.topics.topic);
   const subtopics = useSelector(
-    (state: RootState) => state.subTopics.subtopics
+    (state: RootState) => state.subTopics.selectedsubtopics
   );
   const status = useSelector((state: RootState) => state.subTopics.status);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     console.log("Topic Effect Test");
-    if (
-      status === SubTopicsCodStatus.IDLE ||
-      status === SubTopicsCodStatus.CREATED ||
-      status === SubTopicsCodStatus.UPDATED ||
-      status === SubTopicsCodStatus.DELETED
-    ) {
-      dispatch(fetchSubTopics(topic.id!));
-    }
-  }, [status]);
+
+    dispatch(selectSubTopics(topic.id!));
+  }, [topic, status]);
 
   return (
     <div className="absolute min-h-screen min-w-full flex flex-col items-center justify-center bg-black/70 z-10">

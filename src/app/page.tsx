@@ -1,12 +1,16 @@
 "use client";
 
-import { useSelector } from "react-redux";
-import type { RootState } from "@/redux/store";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import type { RootState, AppDispatch } from "@/redux/store";
+import { fetchTopics } from "@/redux/topics/topics";
+import { fetchSubTopics } from "@/redux/sub_topics/sub_topics";
+import { Status } from "@/utils/interfaces";
 
 import StudySection from "../components/study_section/study_section.component";
 import SubTopicsContainer from "@/components/sub_topics_container/sub_topics_container.component";
 import TopicForm from "@/components/topic_form/topic_form.component";
-import { Status } from "@/utils/interfaces";
+import { SubTopicsCodStatus, TopicCodStatus } from "@/utils/status";
 
 export default function Home() {
   const hideContainer = useSelector(
@@ -15,6 +19,32 @@ export default function Home() {
   const hideTopicForm = useSelector(
     (state: RootState) => state.utils.hide_topic_form
   );
+  const status = useSelector((state: RootState) => state.topics.status);
+  const subtopicstatus = useSelector(
+    (state: RootState) => state.subTopics.status
+  );
+  const subtopics = useSelector(
+    (state: RootState) => state.subTopics.selectedsubtopics
+  );
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    console.log("page effect");
+    if (status === TopicCodStatus.IDLE || status === TopicCodStatus.CREATED) {
+      console.log("subtopics fetch");
+      dispatch(fetchTopics());
+    }
+    if (
+      subtopicstatus === SubTopicsCodStatus.IDLE ||
+      subtopicstatus === SubTopicsCodStatus.CREATED ||
+      subtopicstatus === SubTopicsCodStatus.UPDATED ||
+      subtopicstatus === SubTopicsCodStatus.DELETED
+    ) {
+      console.log("subtopics fetch");
+      dispatch(fetchSubTopics());
+    }
+  }, [status, subtopicstatus, subtopics]);
+
   return (
     <>
       {hideContainer ? "" : <SubTopicsContainer />}
