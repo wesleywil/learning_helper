@@ -20,15 +20,14 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const { status, title, description, finished } = await request.json();
+  const { status, title, description } = await request.json();
 
   try {
     const topic = await prisma.topic.create({
       data: {
         status,
         title,
-        description,
-        finished,
+        description
       },
     });
     return NextResponse.json({

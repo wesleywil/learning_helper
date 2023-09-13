@@ -15,7 +15,6 @@ model Topic {
   status      Status
   title       String
   description String
-  finished    Boolean
   sub_topics  Sub_Topic[]
 }
 

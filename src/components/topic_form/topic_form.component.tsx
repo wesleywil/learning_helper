@@ -24,7 +24,6 @@ const TopicForm = () => {
       title: target.title.value,
       description: target.description.value,
       status: status,
-      finished: false,
     };
 
     dispatch(createTopic(data));

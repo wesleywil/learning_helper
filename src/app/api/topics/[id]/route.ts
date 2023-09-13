@@ -33,7 +33,7 @@ export async function PUT(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  const { status, title, description, finished } = await request.json();
+  const { status, title, description } = await request.json();
   try {
     const topic = await prisma.topic.update({
       where: {
@@ -43,7 +43,6 @@ export async function PUT(
         status,
         title,
         description,
-        finished,
       },
       include: {
         sub_topics: true,

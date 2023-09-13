@@ -3,7 +3,6 @@ export interface Topic{
     status:Status,
     title:string,
     description:string,
-    finished:boolean,
     sub_topics?:SubTopic[],
 }
 
