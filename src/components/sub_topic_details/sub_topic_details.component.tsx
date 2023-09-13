@@ -35,12 +35,12 @@ const SubTopicDetails = ({ subTopic }: SubTopicDetailsProps) => {
     setEdit(!edit);
   };
   return (
-    <div className="text-white">
+    <div className="text-[#edf0ef]">
       <div className="px-2 flex justify-between">
         <h3 className="text-2xl font-semibold">{subTopic.title}</h3>
         <button
           onClick={handleDelete}
-          className="hover:text-red-400 transform duration-700 ease-in-out"
+          className="hover:text-[#f6603b] transform duration-700 ease-in-out"
         >
           <FaTrashAlt />
         </button>{" "}
@@ -56,14 +56,14 @@ const SubTopicDetails = ({ subTopic }: SubTopicDetailsProps) => {
           </textarea>
         </div>
       ) : (
-        <p className="w-full h-28 p-2 bg-white text-black rounded">
+        <p className="w-full h-28 p-2 bg-[#edf0ef] text-black rounded">
           {description}
         </p>
       )}
 
       <button
         onClick={() => setEdit(!edit)}
-        className="px-2 hover:text-green-400 transform duration-500 ease-in-out"
+        className="px-2 hover:text-[#f6603b] transform duration-500 ease-in-out"
       >
         {edit ? "double click the textarea to save" : "click to edit"}
       </button>

@@ -31,21 +31,21 @@ const SubTopicsContainer = () => {
   }, [topic, status]);
 
   return (
-    <div className="absolute min-h-screen min-w-full flex flex-col items-center justify-center bg-black/70 z-10">
+    <div className="absolute min-h-screen min-w-full flex flex-col items-center justify-center bg-[#371e30]/70 z-10">
       <button
         onClick={() => dispatch(handleHideSubTopicsContainer())}
-        className="p-2 font-semibold text-5xl text-white hover:bg-red-600 border-2 border-white hover:border-red-600 rounded-full transform duration-700 ease-in-out"
+        className="p-2 font-semibold text-5xl text-[#edf0ef] hover:bg-[#f6603b] border-2 border-[#edf0ef] hover:border-[#f6603b] rounded-full transform duration-700 ease-in-out"
       >
         <FaTimes />
       </button>
       <div className="mt-8 flex gap-2">
         <button
           onClick={() => dispatch(handleHideSubTopicForm())}
-          className="p-2 font-semibold text-xl bg-red-400 hover:bg-red-600 text-white rounded-full transform duration-500 ease-in-out"
+          className="p-2 font-semibold text-xl bg-[#f6603b] hover:bg-[#371e30] text-[#edf0ef] rounded-full transform duration-500 ease-in-out"
         >
           <FaPlus />
         </button>
-        <h2 className="text-3xl font-bold text-white">{topic.title}</h2>
+        <h2 className="text-3xl font-bold text-[#edf0ef]">{topic.title}</h2>
       </div>
 
       <div className="px-2 md:w-4/5 xl:w-1/3 h-[35rem] flex flex-col gap-2 overflow-y-auto">
@@ -55,7 +55,7 @@ const SubTopicsContainer = () => {
             <SubTopicDetails key={item.id} subTopic={item} />
           ))
         ) : (
-          <h1 className="py-8 text-3xl text-white font-semibold text-center">
+          <h1 className="py-8 text-3xl text-[#edf0ef] font-semibold text-center">
             No Sub Topics Added
           </h1>
         )}

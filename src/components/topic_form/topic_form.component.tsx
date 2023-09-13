@@ -30,16 +30,16 @@ const TopicForm = () => {
     dispatch(handleHideTopicForm());
   };
   return (
-    <div className="absolute min-h-screen min-w-full flex flex-col items-center justify-center bg-black/70 z-30">
+    <div className="absolute min-h-screen min-w-full flex flex-col items-center justify-center bg-[#371e30]/70 z-30">
       <form
         onSubmit={handleSubmit}
-        className="md:w-2/3 xl:w-1/3 mt-2 text-white"
+        className="md:w-2/3 xl:w-1/3 mt-2 text-[#edf0ef]"
       >
         <div className="px-2 flex justify-between">
           <h3 className="text-2xl font-semibold">New Topic</h3>
           <button
             onClick={() => dispatch(handleHideTopicForm())}
-            className="text-xl hover:text-red-400 transform duration-700 ease-in-out"
+            className="text-xl hover:text-[#f6603b] transform duration-700 ease-in-out"
           >
             <FaTimes />
           </button>{" "}
@@ -63,7 +63,7 @@ const TopicForm = () => {
 
         <button
           type="submit"
-          className="mt-2 px-2 font-semibold text-white bg-red-500 hover:bg-red-700 transform duration-500 ease-in-out rounded"
+          className="mt-2 px-2 font-semibold text-[#edf0ef] bg-[#f6603b] hover:bg-red-500 transform duration-500 ease-in-out rounded"
         >
           add topic
         </button>

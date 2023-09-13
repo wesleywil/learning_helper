@@ -41,16 +41,18 @@ const StudySection = ({ name, bgColor }: StudySectionProps) => {
         <div className="flex gap-2 items-center">
           <button
             onClick={handleHideForm}
-            className="p-2 bg-black hover:bg-gray-700 text-white font-bold rounded-full"
+            className="p-2 bg-[#f6603b] hover:bg-[#371e30] text-[#edf0ef] font-bold rounded-full transform duration-500 ease-in-out"
           >
             <FaPlus />
           </button>
-          <h2 className="text-xl font-semibold">{capitalizeWords(name)}</h2>
+          <h2 className="text-[#edf0ef] text-xl font-semibold">
+            {capitalizeWords(name)}
+          </h2>
         </div>
 
         <button
           onClick={() => setFullScreen(!fullScreen)}
-          className="p-2 font-semibold bg-black hover:bg-slate-700 text-white hover:text-slate-200 rounded"
+          className="p-2 font-semibold bg-[#f6603b] hover:bg-[#371e30] text-[#edf0ef] hover:text-slate-200 rounded transform duration-500 ease-in-out"
         >
           {fullScreen ? <FaAngleDoubleUp /> : <FaAngleDoubleDown />}
         </button>

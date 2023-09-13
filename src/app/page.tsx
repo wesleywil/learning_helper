@@ -50,19 +50,19 @@ export default function Home() {
       {hideContainer ? "" : <SubTopicsContainer />}
       {hideTopicForm ? "" : <TopicForm />}
 
-      <main className="p-2  flex min-h-screen flex-col items-center  overflow-hidden">
-        <h1 className="mb-4 pb-4 text-5xl font-bold border-b-4 border-black">
+      <main className="p-2  flex min-h-screen flex-col items-center bg-[#371e30] overflow-hidden">
+        <h1 className="my-4 pb-4 text-[#edf0ef] text-5xl font-bold uppercase">
           Learning Tracker
         </h1>
 
         {/* Learning, Next to Learn, Finished */}
         <div className="flex flex-col gap-2 z-0">
           {/* Learning */}
-          <StudySection name={Status.LEARNING} bgColor="#6ce36c75" />
+          <StudySection name={Status.LEARNING} bgColor="#edf0ef75" />
           {/* Next to Learn */}
-          <StudySection name={Status.WANT_TO_LEARN} bgColor="#5c5cdc75" />
+          <StudySection name={Status.WANT_TO_LEARN} bgColor="#edf0ef75" />
           {/* Finished */}
-          <StudySection name={Status.FINISHED} bgColor="#cb5c5c75" />
+          <StudySection name={Status.FINISHED} bgColor="#edf0ef75" />
         </div>
       </main>
     </>
