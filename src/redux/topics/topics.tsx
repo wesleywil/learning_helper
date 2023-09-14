@@ -36,6 +36,16 @@ export const createTopic = createAsyncThunk(
   }
 );
 
+export const deleteTopic = createAsyncThunk(
+  "topics/deleteTopic",
+  async (id: number) => {
+    const res = await fetch(`http://localhost:3000/api/topics/${id}`, {
+      method: "DELETE",
+    });
+    return res.json();
+  }
+);
+
 export const topicSlice = createSlice({
   name: "topics",
   initialState,
@@ -68,6 +78,17 @@ export const topicSlice = createSlice({
         state.topics = payload;
       })
       .addCase(createTopic.rejected, (state, { payload }) => {
+        state.error = String(payload);
+        state.status = TopicCodStatus.ERROR;
+      })
+      .addCase(deleteTopic.pending, (state) => {
+        state.status = TopicCodStatus.DELETING;
+      })
+      .addCase(deleteTopic.fulfilled, (state, { payload }) => {
+        state.status = TopicCodStatus.DELETED;
+        state.topics = payload;
+      })
+      .addCase(deleteTopic.rejected, (state, { payload }) => {
         state.error = String(payload);
         state.status = TopicCodStatus.ERROR;
       });
