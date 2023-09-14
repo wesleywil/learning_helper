@@ -30,7 +30,11 @@ export default function Home() {
 
   useEffect(() => {
     console.log("page effect");
-    if (status === TopicCodStatus.IDLE || status === TopicCodStatus.CREATED) {
+    if (
+      status === TopicCodStatus.IDLE ||
+      status === TopicCodStatus.CREATED ||
+      status === TopicCodStatus.DELETED
+    ) {
       console.log("subtopics fetch");
       dispatch(fetchTopics());
     }
