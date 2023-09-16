@@ -11,6 +11,7 @@ import StudySection from "../components/study_section/study_section.component";
 import SubTopicsContainer from "@/components/sub_topics_container/sub_topics_container.component";
 import TopicForm from "@/components/topic_form/topic_form.component";
 import { SubTopicsCodStatus, TopicCodStatus } from "@/utils/status";
+import UserInfo from "@/components/user_info/user_info.component";
 
 export default function Home() {
   const hideContainer = useSelector(
@@ -58,7 +59,7 @@ export default function Home() {
         <h1 className="my-4 pb-4 text-[#edf0ef] text-5xl font-bold uppercase">
           Learning Tracker
         </h1>
-
+        <UserInfo />
         {/* Learning, Next to Learn, Finished */}
         <div className="flex flex-col gap-2 z-0">
           {/* Learning */}
