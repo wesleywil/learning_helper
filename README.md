@@ -11,6 +11,14 @@ A project that help students to track topics that they're interested in lerning,
 **FrontEnd:** NextJS, Redux-Toolkit, Tailwindcss
 
 
+## Screenshots
+
+### Demo
+![DEMO](https://i.imgur.com/mhB3aZW.gif)
+
+
+
+
 ## Run Locally
 
 ### Clone the project
